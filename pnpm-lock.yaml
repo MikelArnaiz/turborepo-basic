@@ -30,8 +30,8 @@ importers:
   apps/docs:
     dependencies:
       marnaiz-turborepo-ui:
-        specifier: 0.0.1
-        version: 0.0.1
+        specifier: 0.0.2
+        version: link:../../packages/ui
       next:
         specifier: ^13.4.1
         version: 13.4.1(react-dom@18.2.0)(react@18.2.0)
@@ -2667,10 +2667,6 @@ packages:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
     dev: true
-
-  /marnaiz-turborepo-ui@0.0.1:
-    resolution: {integrity: sha512-OH0P8oyKaItGP1DDlQtAJOZTSRP5Joumg99mEoTfDncuuIXfK3WuU586J90ZjOel/HvGczUld1cCMIcG+e6UwA==}
-    dev: false
 
   /meow@6.1.1:
     resolution: {integrity: sha512-3YffViIt2QWgTy6Pale5QpopX/IvU3LPL03jOTqp6pGj3VjesdO/U8CuHMKpnQr4shCNCM5fd5XFFvIIl6JBHg==}

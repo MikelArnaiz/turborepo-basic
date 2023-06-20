@@ -4,7 +4,8 @@
   "commit": false,
   "fixed": [],
   "linked": [],
-  "access": "restricted",
+  "__comment": "This sets how packages are published. if access: 'restricted', packages will be published as private, requiring log in to an npm account with access to install. If access: 'public', the packages will be made available on the public registry. https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public",
+  "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": []

@@ -1,14 +1,14 @@
-# Turborepo starter
+# Turborepo monorepo
 
-This is an official starter Turborepo.
+<!-- This is an official starter Turborepo. -->
 
-## Using this example
+<!-- ## Using this example
 
 Run the following command:
 
 ```sh
 npx create-turbo@latest
-```
+``` -->
 
 ## What's inside?
 
@@ -50,7 +50,12 @@ cd my-turborepo
 pnpm dev
 ```
 
-### Remote Caching
+## How was this project set up
+
+## Releases
+
+
+## Remote Caching
 
 Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
@@ -69,6 +74,8 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 npx turbo link
 ```
 
+It can also be set up to use a [custom server for remore caching](https://turbo.build/repo/docs/core-concepts/remote-caching#custom-remote-caches).
+
 ## Useful Links
 
 Learn more about the power of Turborepo:
@@ -79,3 +86,6 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
+
+

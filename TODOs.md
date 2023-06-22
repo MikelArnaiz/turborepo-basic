@@ -1,5 +1,6 @@
 ## Must
 - [ ] document all steps to create the monorepo
+- [ ] ask about "Package "docs" must depend on the current version of "marnaiz-turborepo-ui": "0.0.4" vs "0.0.1""
 
 ## Should
 - [ ] try again with yarn, perhaps yarn 2 or yarn 3

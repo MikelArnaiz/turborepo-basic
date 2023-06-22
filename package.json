@@ -7,7 +7,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "version": "pnpm version-packages && pnpm i --lockfile-only",
+    "version": "changeset version && pnpm i --lockfile-only",
     "release": " turbo run build --filter=docs^... && changeset publish"
   },
   "devDependencies": {

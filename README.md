@@ -1,15 +1,18 @@
 # Turborepo monorepo
 
-<!-- This is an official starter Turborepo. -->
-
-<!-- ## Using this example
-
-Run the following command:
+Welcome to this POC. 
+This repository was created initially with the official starter of Turborepo;
 
 ```sh
 npx create-turbo@latest
-``` -->
+```
 
+It however includes many changes to assess if a monorepo is the right tool for us.
+
+For a description of the changes made to the original template check [How was this project set up](#how-was-this-project-set-up).
+
+Check the open questions and TODOs of this POC at [TODOs](./TODOs.md)
+.
 ## What's inside?
 
 This Turborepo includes the following packages/apps:
@@ -30,7 +33,8 @@ This Turborepo has some additional tools already setup for you:
 
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- ~~[Prettier](https://prettier.io) for code formatting~~.
+  - Missing prettier configuration file.
 
 ### Build
 
@@ -54,12 +58,17 @@ pnpm dev
 
 ### Scalfolding
 
-Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examples/basic) basic template
+Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examples/basic) basic template.
 
-1. install pnpm
+
+1. [install pnpm](https://pnpm.io/installation)
+
+    This POC uses `pnpm` as it can handle better workspaces.
 1. `pnpm dlx create-turbo@latest` 
 
 ### Package name changes (optional)
+
+Internal package names where prefixed with `marnaiz` so to be able to release them publically to `npm` and not have collisions with other package names.
 
 1. `packages/ui/package.json`'s `name` was changed to `marnaiz-turborepo-ui`.
 1. To propagate the changes run `pnpm install`
@@ -85,9 +94,9 @@ Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examp
     "release": " turbo run build --filter=docs^... && changeset publish"
     ```
 
-1. It should have automatically added,
-    1. file `changeset/README.md`
-    1. file `changeset/config.json`
+1. It should have automatically added the files
+    1. `changeset/README.md`
+    1. `changeset/config.json`, with:
 
         ```json
         {
@@ -102,72 +111,76 @@ Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examp
             "ignore": []
         }
         ```
-      1. change access in `changeset/config.json` if find appropriate.
+      1. change access in `changeset/config.json`.
           This sets how packages are published. If access: `restricted`, packages will be published as private, requiring log in to an npm account with access to install. If access: 'public', the packages will be made available on the public registry.
-          https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public",
+
+          https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public
 
 
-1. Create a GitHub PAT, e.g `GH_MY_PAT`. TODO explain how ands why
-1. TODO check whether the release file is automatically added
+1. Create a GitHub PAT, e.g `GH_MY_PAT`. 
+
+    ‼️ TODO explain how ands why
+
+1. ‼️ TODO check whether the release file is automatically added
 1. Add/Replace `.github/workflows/release.yml` file with the content. Note it references the previously create PAT, name should match.
 
-```yml
-name: Release
-
-on:
-  push:
-    branches:
-      - main
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
-
-jobs:
-  release:
+    ```yml
     name: Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-        # based on 
-        # https://github.com/changesets/action/issues/295#issuecomment-1549427775
-        # https://github.com/ad-m/github-push-action/issues/44#issuecomment-581706892
-        with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
+    on:
+      push:
+        branches:
+          - main
 
-      - name: Setup Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: 'pnpm'
+    concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-      - name: Install Dependencies
-        run: pnpm install
+    jobs:
+      release:
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repo
+            uses: actions/checkout@v2
+            # based on 
+            # https://github.com/changesets/action/issues/295#issuecomment-1549427775
+            # https://github.com/ad-m/github-push-action/issues/44#issuecomment-581706892
+            with:
+              persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+              fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          # To prevent ERR_PNPM_OUTDATED_LOCKFILE error.
-          # PR get's merge with changes in package.json but it doesn't update the lock file
-          # https://github.com/changesets/action/issues/203#issuecomment-1460115073
-          version: pnpm run version-ci
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish: pnpm run release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_MY_PAT }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          - name: Install pnpm
+            uses: pnpm/action-setup@v2
+            with:
+              version: 8
 
-      # - name: Send a Slack notification if a publish happens
-      #   if: steps.changesets.outputs.published == 'true'
-      #   # You can do something when a publish happens.
-      #   run: my-slack-bot send-notification --message "A new version of ${GITHUB_REPOSITORY} was published!"
-```
+          - name: Setup Node.js 16.x
+            uses: actions/setup-node@v3
+            with:
+              node-version: 16.x
+              cache: 'pnpm'
+
+          - name: Install Dependencies
+            run: pnpm install
+
+          - name: Create Release Pull Request or Publish to npm
+            id: changesets
+            uses: changesets/action@v1
+            with:
+              # To prevent ERR_PNPM_OUTDATED_LOCKFILE error.
+              # PR get's merge with changes in package.json but it doesn't update the lock file
+              # https://github.com/changesets/action/issues/203#issuecomment-1460115073
+              version: pnpm run version-ci
+              # This expects you to have a script called release which does a build for your packages and calls changeset publish
+              publish: pnpm run release
+            env:
+              GITHUB_TOKEN: ${{ secrets.GH_MY_PAT }}
+              NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+          # - name: Send a Slack notification if a publish happens
+          #   if: steps.changesets.outputs.published == 'true'
+          #   # You can do something when a publish happens.
+          #   run: my-slack-bot send-notification --message "A new version of ${GITHUB_REPOSITORY} was published!"
+    ```
 
 <!-- 1. change `uses: actions/checkout@v2` for `uses: actions/checkout@v3` UNDONE after-->
 
@@ -176,11 +189,14 @@ jobs:
 1. Make a change in `packages/ui/Button.tsx`, e.g the inner text.
 1. Run `pnpm version`
     1. Choose the packages to create a changeset for, in our case just `marnaiz-turborepo-ui`
+
+        ‼️ TODO show screenshot
+
     1. Choose patch (skip both major and minor changes)
     1. Write a message for the release notes.
     1. It will create a file in the `.changeset` directory
 1. You can commit the changes and push, on merge, the Github action  will generate a new patch release
-1. TODO CHECK, at this point it might happen that both docs and web are pointing to the new version. If so change it manually and run `pnpm install again`.
+1. ‼️ TODO CHECK, at this point it might happen that both docs and web are pointing to the new version. If so change it manually and run `pnpm install again`.
 1. You've done your first release!
 
 

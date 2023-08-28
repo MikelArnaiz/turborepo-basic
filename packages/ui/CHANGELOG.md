@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 0.0.7
+
+### Patch Changes
+
+- fdd8e6a: this is v7
+
 ## 0.0.6
 
 ### Patch Changes

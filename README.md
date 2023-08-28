@@ -63,7 +63,7 @@ Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examp
 
 1. [install pnpm](https://pnpm.io/installation)
 
-    This POC uses `pnpm` as it can handle better workspaces.
+    This POC uses `pnpm` as it can handle workspaces better than `npm`/`yarn`.
 1. `pnpm dlx create-turbo@latest` 
 
 ### Package name changes (optional)
@@ -80,6 +80,8 @@ Internal package names where prefixed with `marnaiz` so to be able to release th
         1. `apps/docs/next.config.js`, replace ` ["ui"]` with `["marnaiz-turborepo-ui"]`
 
 ### Adds @changesets
+
+Turborepo is a task runner, it won't create package versions itself, for that we use [changesets](https://github.com/changesets/changesets).
 
 1. Install `@changesets/cli`.
     ```
@@ -112,7 +114,7 @@ Internal package names where prefixed with `marnaiz` so to be able to release th
         }
         ```
       1. change access in `changeset/config.json`.
-          This sets how packages are published. If access: `restricted`, packages will be published as private, requiring log in to an npm account with access to install. If access: 'public', the packages will be made available on the public registry.
+          This sets how packages are published. If access: `restricted`, packages will be published as private, requiring log in to an npm account with access to install. If access: `public`, the packages will be made available on the public registry.
 
           https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public
 
@@ -122,7 +124,11 @@ Internal package names where prefixed with `marnaiz` so to be able to release th
     ‼️ TODO explain how ands why
 
 1. ‼️ TODO check whether the release file is automatically added
-1. Add/Replace `.github/workflows/release.yml` file with the content. Note it references the previously create PAT, name should match.
+1. Add/Replace `.github/workflows/release.yml` file with the content.
+
+    Note it references the previously create PAT, name should match.
+    
+    There are inline comments, pay attention to them.
 
     ```yml
     name: Release
@@ -146,7 +152,7 @@ Internal package names where prefixed with `marnaiz` so to be able to release th
             # https://github.com/ad-m/github-push-action/issues/44#issuecomment-581706892
             with:
               persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-              fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+              fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
 
           - name: Install pnpm
             uses: pnpm/action-setup@v2
@@ -184,7 +190,7 @@ Internal package names where prefixed with `marnaiz` so to be able to release th
 
 <!-- 1. change `uses: actions/checkout@v2` for `uses: actions/checkout@v3` UNDONE after-->
 
-### First change and release
+## Changes and releases
 
 1. Make a change in `packages/ui/Button.tsx`, e.g the inner text.
 1. Run `pnpm version`
@@ -195,12 +201,9 @@ Internal package names where prefixed with `marnaiz` so to be able to release th
     1. Choose patch (skip both major and minor changes)
     1. Write a message for the release notes.
     1. It will create a file in the `.changeset` directory
-1. You can commit the changes and push, on merge, the Github action  will generate a new patch release
+1. You can commit the changes and push. On merge, the Github action  will generate a new patch release
 1. ‼️ TODO CHECK, at this point it might happen that both docs and web are pointing to the new version. If so change it manually and run `pnpm install again`.
 1. You've done your first release!
-
-
-## Releases
 
 
 ## Remote Caching

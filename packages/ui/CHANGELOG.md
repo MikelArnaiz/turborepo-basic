@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 0.0.6
+
+### Patch Changes
+
+- 00d2c60: v6
+
 ## 0.0.5
 
 ### Patch Changes

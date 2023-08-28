@@ -91,8 +91,8 @@ Turborepo is a task runner, it won't create package versions itself, for that we
 
     ```json
     "changeset": "changeset",
-    "version": "changeset version",
-    "version-ci": "changeset version && pnpm i --lockfile-only",
+    "version-packages": "changeset version",
+    "version": "changeset version && pnpm i --lockfile-only",
     "release": " turbo run build --filter=docs^... && changeset publish"
     ```
 
@@ -193,16 +193,19 @@ Turborepo is a task runner, it won't create package versions itself, for that we
 ## Changes and releases
 
 1. Make a change in `packages/ui/Button.tsx`, e.g the inner text.
-1. Run `pnpm version`
+1. Run `pnpm changeset`
     1. Choose the packages to create a changeset for, in our case just `marnaiz-turborepo-ui`
 
-        ‼️ TODO show screenshot
+        ![](/docs/changeset.png)
 
     1. Choose patch (skip both major and minor changes)
+
+        ![](/docs/changeset-patch.png)
     1. Write a message for the release notes.
     1. It will create a file in the `.changeset` directory
-1. You can commit the changes and push. On merge, the Github action  will generate a new patch release
-1. ‼️ TODO CHECK, at this point it might happen that both docs and web are pointing to the new version. If so change it manually and run `pnpm install again`.
+        ![](/docs/changeset-file.png)
+1. You can commit the changes and push. On merge, the Github action will generate a new pull request that once this is merged it will create a new patch release.
+1. ‼️ TODO CHECK, at this point it might happen that both docs and web are pointing to the new version. If so change it manually and run `pnpm install` again.
 1. You've done your first release!
 
 

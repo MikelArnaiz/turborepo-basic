@@ -25,3 +25,8 @@
 - [ ] Understand how does "[Linked Packages](https://github.com/changesets/changesets/blob/main/docs/fixed-packages.md#fixed-packages)" and "[Fixed Packages](https://github.com/changesets/changesets/blob/main/docs/fixed-packages.md#fixed-packages)" work.
 - [ ] [Remote caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
 - [ ] Enable slack notifications in the release file
+
+
+## Read
+- https://segmentfault.com/a/1190000041417381/en
+- https://refine.dev/blog/how-to-use-turborepo/#prune-now-supports-all-package-managers

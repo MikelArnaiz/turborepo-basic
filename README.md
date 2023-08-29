@@ -238,10 +238,13 @@ It can also be set up to use a [custom server for remore caching](https://turbo.
 
 As a mere showcase I have deployed the apps to Vercel.
 
-TODO add screenshots
-
 - Docs: https://turborepo-basic-docs-pearl.vercel.app/
 - Web: https://turborepo-basic-web-ivory.vercel.app/
+
+To do so you have to create a project per `app` you want to deploy, and make sure to change the config and point to each app directory:
+
+![](./docs/vercel-app-docs.png)
+![](./docs/vercel-app-web.png)
 
 ## Useful Links
 

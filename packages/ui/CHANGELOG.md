@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.0
+
+### Major Changes
+
+- 3bf4b8b: Adds onClick callback to button
+
 ## 0.0.7
 
 ### Patch Changes

@@ -2,22 +2,25 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,scss,css,yml}\"",
     "changeset": "changeset",
+    "dev": "turbo run dev",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,scss,css,yml}\"",
+    "lint": "turbo run lint",
+    "release": " turbo run build --filter=docs^... && changeset publish",
+    "tsc": "tsc --noEmit",
     "version-packages": "changeset version",
-    "version": "pnpm version-packages && pnpm i --lockfile-only",
-    "release": " turbo run build --filter=docs^... && changeset publish"
+    "version": "pnpm version-packages && pnpm i --lockfile-only"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
     "@turbo/gen": "^1.9.7",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
-    "prettier-config-custom": "workspace:*",
     "prettier": "^2.5.1",
-    "turbo": "latest"
+    "prettier-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "turbo": "latest",
+    "typescript": "^4.5.3"
   },
   "packageManager": "pnpm@7.15.0",
   "name": "basic"

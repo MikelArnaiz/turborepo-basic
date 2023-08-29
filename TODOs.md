@@ -26,7 +26,7 @@
 - [ ] import or create this repo in Catawiki org, e.g `turborepo-poc`
   - [ ] need npm token
 - [ ] create meaningful examples
-- [ ] Understand how does "[Linked Packages](https://github.com/changesets/changesets/blob/main/docs/fixed-packages.md#fixed-packages)" and "[Fixed Packages](https://github.com/changesets/changesets/blob/main/docs/fixed-packages.md#fixed-packages)" work.
+- [ ] Understand how does "[Linked Packages](https://github.com/changesets/changesets/blob/main/docs/linked-packages.md)" and "[Fixed Packages](https://github.com/changesets/changesets/blob/main/docs/fixed-packages.md#fixed-packages)" work.
 - [ ] [Remote caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
 - [ ] Enable slack notifications in the release file
 

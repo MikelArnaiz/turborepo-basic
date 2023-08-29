@@ -17,7 +17,8 @@
     "eslint-config-custom": "workspace:*",
     "prettier-config-custom": "workspace:*",
     "prettier": "^2.5.1",
-    "turbo": "latest"
+    "turbo": "latest",
+    "tsconfig": "workspace:*"
   },
   "packageManager": "pnpm@7.15.0",
   "name": "basic"

@@ -1,4 +1,4 @@
 module.exports = {
   reactStrictMode: true,
-  transpilePackages: ["marnaiz-turborepo-ui"],
-};
+  transpilePackages: ['marnaiz-turborepo-ui'],
+}

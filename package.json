@@ -4,7 +4,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,scss,css,yml}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "version": "pnpm version-packages && pnpm i --lockfile-only",
@@ -15,6 +15,7 @@
     "@turbo/gen": "^1.9.7",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
+    "prettier-config-custom": "workspace:*",
     "prettier": "^2.5.1",
     "turbo": "latest"
   },

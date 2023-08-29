@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        # based on 
+        # based on
         # https://github.com/changesets/action/issues/295#issuecomment-1549427775
         # https://github.com/ad-m/github-push-action/issues/44#issuecomment-581706892
         with:

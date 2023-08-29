@@ -73,7 +73,7 @@ importers:
   apps/web:
     dependencies:
       marnaiz-turborepo-ui:
-        specifier: 0.0.7
+        specifier: workspace:*
         version: link:../../packages/ui
       next:
         specifier: ^13.4.1

@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import * as React from "react";
+import * as React from 'react'
 
 export const Button = () => {
-  return <button onClick={() => alert("boop")}>Boop v7</button>;
-};
+  return <button onClick={() => alert('boop')}>Boop v7</button>
+}

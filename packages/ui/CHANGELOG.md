@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.1
+
+### Patch Changes
+
+- 675b29b: uses new tsconfig package
+
 ## 1.0.0
 
 ### Major Changes

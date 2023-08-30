@@ -1,5 +1,13 @@
 # web
 
+## 1.0.7
+
+### Patch Changes
+
+- 675b29b: uses new tsconfig package
+- Updated dependencies [675b29b]
+  - marnaiz-turborepo-ui@1.0.1
+
 ## 1.0.6
 
 ### Patch Changes

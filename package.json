@@ -18,7 +18,7 @@
     "eslint-config-custom": "workspace:*",
     "prettier": "^2.5.1",
     "prettier-config-custom": "workspace:*",
-    "marnaiz-turborepo-tsconfig": "workspace:*",
+    "@marnaiz/turborepo-tsconfig": "workspace:*",
     "turbo": "latest",
     "typescript": "^4.5.3"
   },

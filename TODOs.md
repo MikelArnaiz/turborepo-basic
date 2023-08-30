@@ -14,6 +14,8 @@
 - [ ] 1st commit is from `create-turbo@`. Commit is `feat(create-turbo): create basic`. Does this mean they support `conventional commits`?
   - [ ] How to enforce the commit messages.
   - [ ] Would a commit with `BREAKING CHANGE` produce a major release?
+- [ ] pre releases:
+      https://github.com/changesets/changesets/blob/main/docs/prereleases.md
 
 ## Have to
 

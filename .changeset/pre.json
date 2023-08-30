@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "docs": "1.0.1",
+    "web": "1.0.6",
+    "eslint-config-custom": "0.0.0",
+    "prettier-config-custom": "0.0.0",
+    "tsconfig": "0.0.0",
+    "marnaiz-turborepo-ui": "1.0.0"
+  },
+  "changesets": []
+}

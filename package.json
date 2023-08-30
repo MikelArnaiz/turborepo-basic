@@ -9,7 +9,10 @@
     "release": " turbo run build --filter=docs^... && changeset publish",
     "tsc": "tsc --noEmit",
     "version-packages": "changeset version",
-    "version": "pnpm version-packages && pnpm i --lockfile-only"
+    "version": "pnpm version-packages && pnpm i --lockfile-only",
+    "pre:enter": "changeset pre enter next",
+    "pre:exit": "changeset pre exit",
+    "version:publish": "changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",

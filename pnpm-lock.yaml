@@ -124,10 +124,11 @@ importers:
   packages/tsconfig: {}
 
   packages/ui:
-    devDependencies:
+    dependencies:
       '@marnaiz/turborepo-tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+    devDependencies:
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.5

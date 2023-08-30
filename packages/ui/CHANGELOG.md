@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.2
+
+### Patch Changes
+
+- f61a61c: moves tsconfig dependency to non dev dependency
+
 ## 1.0.1
 
 ### Patch Changes

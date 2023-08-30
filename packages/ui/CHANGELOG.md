@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.1-next.0
+
+### Patch Changes
+
+- 71228d3: tsconfig with no extends
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,0 +1,2 @@
+# Adding so NPM doens't pick gitignore and hide dist in the releases
+# https://stackoverflow.com/a/31642553

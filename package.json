@@ -13,8 +13,7 @@
     "lint": "turbo run lint",
     "release": " turbo run build --filter=docs^... && changeset publish",
     "release:pre": "pnpm changeset:pre && pnpm release",
-    "tsc": "tsc --noEmit",
-    "version": "pnpm changeset:version"
+    "tsc": "tsc --noEmit"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",

@@ -3,7 +3,9 @@
   "version": "1.0.3-next.3",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "module": "src/index.ts",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",

@@ -2,15 +2,25 @@
   "name": "marnaiz-turborepo-ui",
   "version": "1.0.3-next.4",
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
   "license": "MIT",
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
     "generate:component": "turbo gen react-component",
-    "build": "tsup src/index.ts --format cjs --dts",
+    "build": "tsup src/index.ts --format esm,cjs --dts",
     "dev": "pnpm run build -- --watch"
   },
   "dependencies": {

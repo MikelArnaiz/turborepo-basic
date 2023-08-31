@@ -7,5 +7,5 @@ type ButtonProps = {
 }
 
 export const Button = ({ onClick }: ButtonProps) => {
-  return <button onClick={onClick}>Boop v8</button>
+  return <button onClick={onClick}>Boop v10</button>
 }

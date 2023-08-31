@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.3-next.1
+
+### Patch Changes
+
+- f2370a4: moves files to src
+
 ## 1.0.3-next.0
 
 ### Patch Changes

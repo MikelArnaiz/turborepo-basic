@@ -10,6 +10,7 @@
     "marnaiz-turborepo-ui": "1.0.2"
   },
   "changesets": [
+    "fluffy-steaks-itch",
     "smart-seals-swim"
   ]
 }

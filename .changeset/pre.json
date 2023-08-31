@@ -1,0 +1,15 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "docs": "1.0.2",
+    "web": "1.0.8",
+    "eslint-config-custom": "0.0.0",
+    "prettier-config-custom": "0.0.0",
+    "@marnaiz/turborepo-tsconfig": "1.0.0",
+    "marnaiz-turborepo-ui": "1.0.2"
+  },
+  "changesets": [
+    "smart-seals-swim"
+  ]
+}

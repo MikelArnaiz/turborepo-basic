@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.3-next.0
+
+### Patch Changes
+
+- f4aa3cb: adds build script
+
 ## 1.0.2
 
 ### Patch Changes

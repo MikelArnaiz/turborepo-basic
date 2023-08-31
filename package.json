@@ -3,13 +3,18 @@
   "scripts": {
     "build": "turbo run build",
     "changeset": "changeset",
+    "changeset:enter": "changeset pre enter next",
+    "changeset:pre": "pnpm changeset:enter && pnpm changeset:version",
+    "changeset:exit": "changeset pre exit",
+    "changeset:publish": "changeset publish",
+    "changeset:version": "changeset version",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,scss,css,yml}\"",
     "lint": "turbo run lint",
     "release": " turbo run build --filter=docs^... && changeset publish",
+    "release:pre": "pnpm changeset:pre && pnpm release",
     "tsc": "tsc --noEmit",
-    "version-packages": "changeset version",
-    "version": "pnpm version-packages && pnpm i --lockfile-only"
+    "version": "pnpm changeset:version && pnpm i --lockfile-only"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",

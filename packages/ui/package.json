@@ -1,6 +1,6 @@
 {
   "name": "marnaiz-turborepo-ui",
-  "version": "1.0.3-next.4",
+  "version": "1.0.3-next.5",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

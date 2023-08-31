@@ -246,6 +246,29 @@ To do so you have to create a project per `app` you want to deploy, and make sur
 ![](./docs/vercel-app-docs.png)
 ![](./docs/vercel-app-web.png)
 
+## Bundling
+
+While working inside the monorepo `packages/` don't need to be bundled but if we want to consume them from a microservice we need to do so.
+
+Until recencly it was common to generate commomJS (CJS) files, however we should aim to produce ES modules (ESM) so bundlers like webpack can do tree shaking and keep ES6 code if needed.
+
+For `marnaiz-turborepo-ui` I needed to configure the package. It was a chanllenge to make it compliance with ESM and CJS. After lot of try and error it works now.
+
+Key points.
+
+- `package.json` should not have a `type` property,
+- `main` should point to the `cjs` version
+- `module` to `mjs` (aka ESM) version
+- `types` to `cjs`
+- `exports` property to with both inner `require` (CJS) and `import` (ESM) props.
+
+The resources I used were:
+
+- https://arethetypeswrong.github.io/
+- https://github.com/arethetypeswrong/arethetypeswrong.github.io/blob/main/docs/problems/FalseCJS.md
+- https://tsup.egoist.dev/#bundle-formats
+- https://blog.isquaredsoftware.com/2023/08/esm-modernization-lessons/#round-2-results
+
 ## Useful Links
 
 Learn more about the power of Turborepo:

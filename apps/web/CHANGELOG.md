@@ -1,5 +1,13 @@
 # web
 
+## 1.0.9-next.4
+
+### Patch Changes
+
+- 9d5f35f: adds files property
+- Updated dependencies [9d5f35f]
+  - marnaiz-turborepo-ui@1.0.3-next.4
+
 ## 1.0.9-next.3
 
 ### Patch Changes

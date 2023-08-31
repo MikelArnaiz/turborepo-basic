@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.3-next.4
+
+### Patch Changes
+
+- 9d5f35f: adds files property
+
 ## 1.0.3-next.3
 
 ### Patch Changes

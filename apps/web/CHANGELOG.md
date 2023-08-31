@@ -1,5 +1,13 @@
 # web
 
+## 1.0.9-next.3
+
+### Patch Changes
+
+- adds module entry to package.json
+- Updated dependencies
+  - marnaiz-turborepo-ui@1.0.3-next.3
+
 ## 1.0.9-next.2
 
 ### Patch Changes

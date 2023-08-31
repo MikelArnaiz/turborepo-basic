@@ -1,5 +1,13 @@
 # web
 
+## 1.0.9-next.6
+
+### Patch Changes
+
+- f111827: types for esm and cjs
+- Updated dependencies [f111827]
+  - marnaiz-turborepo-ui@1.0.3-next.6
+
 ## 1.0.9-next.5
 
 ### Patch Changes

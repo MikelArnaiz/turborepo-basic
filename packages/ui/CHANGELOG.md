@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.3-next.6
+
+### Patch Changes
+
+- f111827: types for esm and cjs
+
 ## 1.0.3-next.5
 
 ### Patch Changes

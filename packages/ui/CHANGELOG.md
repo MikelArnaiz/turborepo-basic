@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.3-next.2
+
+### Patch Changes
+
+- 8f3b6b9: v10 button
+
 ## 1.0.3-next.1
 
 ### Patch Changes

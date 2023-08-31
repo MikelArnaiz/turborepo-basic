@@ -1,5 +1,13 @@
 # web
 
+## 1.0.9-next.2
+
+### Patch Changes
+
+- 8f3b6b9: v10 button
+- Updated dependencies [8f3b6b9]
+  - marnaiz-turborepo-ui@1.0.3-next.2
+
 ## 1.0.9-next.1
 
 ### Patch Changes

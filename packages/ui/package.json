@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
     "generate:component": "turbo gen react-component",
-    "build": "tsup index.tsx --format cjs --dts",
+    "build": "tsup src/index.ts --format cjs --dts",
     "dev": "pnpm run build -- --watch"
   },
   "dependencies": {

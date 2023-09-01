@@ -14,12 +14,13 @@
 - [ ] 1st commit is from `create-turbo@`. Commit is `feat(create-turbo): create basic`. Does this mean they support `conventional commits`?
   - [ ] How to enforce the commit messages.
   - [ ] Would a commit with `BREAKING CHANGE` produce a major release?
+  - [ ] move back tsconfig dependency to dev
 
 ## Have to
 
 - [ ] add the missing files described in the impact analisys, e.g
   - [x] Prettier
-  - [ ] editorconfig
+  - [x] editorconfig
 
 ## Nice to have
 

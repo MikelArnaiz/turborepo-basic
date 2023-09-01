@@ -1,6 +1,6 @@
 # Turborepo monorepo
 
-Welcome to this POC.
+Welcome to this monorepo POC, the technology used is [Turborepo](https://turbo.build/repo).
 This repository was created initially with the official starter of Turborepo;
 
 ```sh
@@ -9,9 +9,9 @@ npx create-turbo@latest
 
 It however includes many changes to assess if a monorepo is the right tool for us.
 
-For a description of the changes made to the original template check [How was this project set up](#how-was-this-project-set-up).
+For a description of the changes made to the original template check [How was this project set up](#how-was-this-project-set-up) in this readme.
 
-Check the open questions and TODOs of this POC at [TODOs](./TODOs.md)
+For the still open questions and TODOs of this POC check [TODOs](./TODOs.md)
 .
 
 ## What's inside?
@@ -22,9 +22,9 @@ This Turborepo includes the following packages/apps:
 
 - `docs`: a [Next.js](https://nextjs.org/) app
 - `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `ui`: a stub React component library shared by both `web` and `docs` applications. Published to npm as `marnaiz-turborepo-ui`
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `tsconfig`: `tsconfig.json`s used throughout the monorepo. Published to npm as `@marnaiz/turborepo-tsconfig`
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
@@ -35,7 +35,6 @@ This Turborepo has some additional tools already setup for you:
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting.
-  - [x] Missing prettier configuration file.
 
 ### Build
 
@@ -57,6 +56,9 @@ pnpm dev
 
 ## How was this project set up
 
+The following steps are mere informative to understand how to set up a turborepo from scratch.
+You don't need to do this, it has already been done.
+
 ### Scalfolding
 
 Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examples/basic) basic template.
@@ -69,32 +71,31 @@ Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examp
 
 ### Package name changes (optional)
 
-Internal package names where prefixed with `marnaiz` so to be able to release them publically to `npm` and not have collisions with other package names.
+Internal package names where prefixed with either `marnaiz-` or `@marnaiz/` so to be able to release them publically to `npm` and not have collisions with other package names.
 
-1. `packages/ui/package.json`'s `name` was changed to `marnaiz-turborepo-ui`.
-1. To propagate the changes run `pnpm install`
-1. Change broken references:
+1. ui
+   1. `packages/ui/package.json`'s `name` was changed to `marnaiz-turborepo-ui`.
+   1. To propagate the changes run `pnpm install`
+   1. Change broken references:
    1. Replace `ui` with `marnaiz-turborepo-ui`:
       1. `apps/docs/app/page.tsx` import now should be `from "marnaiz-turborepo-ui"`
       1. `apps/docs/next.config.js`, replace ` ["ui"]` with `["marnaiz-turborepo-ui"]`
       1. `apps/web/app/page.tsx` import now should be `from "marnaiz-turborepo-ui"`
       1. `apps/docs/next.config.js`, replace ` ["ui"]` with `["marnaiz-turborepo-ui"]`
+1. tsconfig
+   1. `packages/tsconfig/package.json`'s name was changed from `tsconfig` to `@marnaiz/turborepo-tsconfig`
+   1. Change references:
+      1. in `/package.json` (root), `apps/docs/package.json`, `apps/web/package.json`, `packages/ui/package.json`
+      1. `/tsconfig.json`, `apps/docs/tsconfig.json`, `apps/web/tsconfig.json`, `packages/ui/tsconfig.json` extends property
 
 ### Adds @changesets
 
 Turborepo is a task runner, it won't create package versions itself, for that we use [changesets](https://github.com/changesets/changesets).
 
 1. Install `@changesets/cli`.
+
    ```
    pnpm install @changesets/cli -D
-   ```
-1. Add to `package.json`'s scripts
-
-   ```json
-   "changeset": "changeset",
-   "version-packages": "changeset version",
-   "version": "changeset version && pnpm i --lockfile-only",
-   "release": " turbo run build --filter=docs^... && changeset publish"
    ```
 
 1. It should have automatically added the files
@@ -121,14 +122,29 @@ Turborepo is a task runner, it won't create package versions itself, for that we
 
       https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public
 
+1. Add to `package.json`'s scripts
+
+   ```json
+   "changeset": "changeset",
+   "changeset:enter": "changeset pre enter next",
+   "changeset:pre": "pnpm changeset:enter && pnpm changeset:version",
+   "changeset:exit": "changeset pre exit",
+   "changeset:publish": "changeset publish",
+   "changeset:version": "changeset version && pnpm i --lockfile-only",
+   "release": " turbo run build --filter=docs^... && changeset publish",
+   "release:pre": "pnpm changeset:pre && pnpm release",
+   ```
+
 1. Create a GitHub PAT, e.g `GH_MY_PAT`.
+
+   https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
 
    ‼️ TODO explain how ands why
 
 1. ‼️ TODO check whether the release file is automatically added
-1. Add/Replace `.github/workflows/release.yml` file with the content.
+1. Add/Replace `.github/workflows/release.yml` file with the following content.
 
-   Note it references the previously create PAT, name should match.
+   Note, it references the previously create PAT, variable name should match.
 
    There are inline comments, pay attention to them.
 
@@ -184,34 +200,93 @@ Turborepo is a task runner, it won't create package versions itself, for that we
              GITHUB_TOKEN: ${{ secrets.GH_MY_PAT }}
              NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+         # DISABLED FOR NOW
          # - name: Send a Slack notification if a publish happens
          #   if: steps.changesets.outputs.published == 'true'
          #   # You can do something when a publish happens.
          #   run: my-slack-bot send-notification --message "A new version of ${GITHUB_REPOSITORY} was published!"
    ```
 
-<!-- 1. change `uses: actions/checkout@v2` for `uses: actions/checkout@v3` UNDONE after-->
+## Changes, versioning and releases
 
-## Changes and releases
+Our research shows that the monorepo philosophy is to work _always_ with the latest changes.
+That's achived by pointing dependencies to `workspace:*`, e.g.:
 
-1. Make a change in `packages/ui/Button.tsx`, e.g the inner text.
-1. Run `pnpm changeset`
+```
+"eslint-config-custom": "workspace:*",3
+```
 
-   1. Choose the packages to create a changeset for, in our case just `marnaiz-turborepo-ui`
+This would mean a big change in the way we work.
 
-      ![](/docs/changeset.png)
+Until now you were able to create a release with breaking changes and it was up to consumers to fix those breaking changes when adoption the new version.
 
-   1. Choose patch (skip both major and minor changes)
+With a monorepo where everything is always working on _latest_ the responsibility of fixing those breaking changes relies on the person introducing the breaking changes.
 
-      ![](/docs/changeset-patch.png)
+To avoid such a radical change we can and will be using versioning, releasing packages to npm. We will do that with a 3rd party tool; [changeset](https://github.com/changesets/changesets).
 
-   1. Write a message for the release notes.
-   1. It will create a file in the `.changeset` directory
-      ![](/docs/changeset-file.png)
+For example, to release a new version of the ui package, including changes to the `<Button>` component, we need to run a bunch of commands.
 
-1. You can commit the changes and push. On merge, the Github action will generate a new pull request that once this is merged it will create a new patch release.
-1. ‼️ TODO CHECK, at this point it might happen that both docs and web are pointing to the new version. If so change it manually and run `pnpm install` again.
-1. You've done your first release!
+Note, pay attention to the order as there are alternatives.
+
+### 1. Create changeset file
+
+When we have all the changes we need and want to prepate a release we have to create a changeset file. It get's generated by running
+
+```
+pnpm changeset
+```
+
+![](/docs/changeset.png)
+
+It will ask you which packages to update, usually those with changes.
+
+Choose between major, minor and patch
+
+![](/docs/changeset-patch.png)
+
+Write a message for the release notes.
+
+It will generate a _3 word_ file inside `./.changeset/` directory. File that you should commit.
+
+![](/docs/changeset-file.png)
+
+### 2a. Updating package versions (locally)
+
+If you want your branch to include the changes updating the package.json files, run
+
+```
+changeset:version
+```
+
+#### Prereleases
+
+Note, if you want to create a prerelease, e.g. `1.2.3-next.0`, then the command should be
+
+```
+changeset:version:pre
+```
+
+Once you are ready to release a stable release, `1.2.3`, you should
+
+```
+changeset:version:pre:exit
+```
+
+### 3a. Releasing versions, locally
+
+To publish the packages to the registry from your machine, run
+
+```
+pnpm changeset:publish
+```
+
+### 2b. Updating package versions (by GitHub action)
+
+Alternatively to `2a` you can create a PR with just the changeset file. Once this PR gets merged the GitHub bot will create a new PR with upgrading the `package.json`'s files.
+
+### 3b. Releasing versions, by Github action
+
+After the PR created by GitHub bot mentioned in 2b get's merged, the packages will be released.
 
 ## Remote Caching
 
@@ -248,11 +323,13 @@ To do so you have to create a project per `app` you want to deploy, and make sur
 
 ## Bundling
 
-While working inside the monorepo `packages/` don't need to be bundled but if we want to consume them from a microservice we need to do so.
+While working inside the monorepo `packages/` don't need to be bundled but if we want to consume them from a microservice (installing it from `npm`) we need to do so.
+
+### Background
 
 Until recencly it was common to generate commomJS (CJS) files, however we should aim to produce ES modules (ESM) so bundlers like webpack can do tree shaking and keep ES6 code if needed.
 
-For `marnaiz-turborepo-ui` I needed to configure the package. It was a chanllenge to make it compliance with ESM and CJS. After lot of try and error it works now.
+For `marnaiz-turborepo-ui` I needed to configure the package. It was a chanllenge to make it compliance with ESM and CJS. After lots of try and error it works now.
 
 Key points.
 
@@ -279,3 +356,16 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
+## Concerns
+
+### IDE code vs version used
+
+Working in a monorepo has the great advantage that you can jump to any file easily. This might become a doble side sword when using versioning.
+
+Let's assume you are working on an app of the monorepo and this app uses a package from the monorepo.
+You want to know how does the package work and access it.
+
+This might be misleading because the code you see is the latest but the app could be using (pointing in `package.json`) to an older version.
+
+In a non monorepo environment, the reference of an import would take you to the types declaration, no to the source code.

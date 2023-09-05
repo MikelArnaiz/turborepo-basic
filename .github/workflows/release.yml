@@ -42,7 +42,7 @@ jobs:
           # To prevent ERR_PNPM_OUTDATED_LOCKFILE error.
           # PR get's merge with changes in package.json but it doesn't update the lock file
           # https://github.com/changesets/action/issues/203#issuecomment-1460115073
-          version: pnpm run version
+          version: pnpm run changeset:version
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
           publish: pnpm run release
         env:

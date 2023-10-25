@@ -3,7 +3,7 @@ import { Button, Header } from 'marnaiz-turborepo-ui'
 export default function Page() {
   return (
     <>
-      <Header text="Docs" />
+      <Header text="This is the apps/docs page" />
       <Button />
     </>
   )

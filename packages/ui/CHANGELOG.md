@@ -1,5 +1,13 @@
 # marnaiz-turborepo-ui
 
+## 1.0.4
+
+### Patch Changes
+
+- e6ab4c3: v11
+- 8cfb34e: new text inside button component
+- 585e6be: v12
+
 ## 1.0.3
 
 ### Patch Changes

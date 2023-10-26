@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.4
+
+### Patch Changes
+
+- bb5f441: v14 button
+
 ## 1.0.3
 
 ### Patch Changes

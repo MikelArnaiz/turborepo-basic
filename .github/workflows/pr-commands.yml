@@ -58,6 +58,9 @@ jobs:
           node-version: ${{ steps.node-version.outputs.content }}
           cache: 'pnpm'
 
+      - name: Print pnpm version
+        run: pnpm -v
+
       #   # TODO remove this step once all packages are published into GitHub NPM registry
       # - name: Configure git, so we can clone packages that are not from GitHub NPM registry
       #   run: |

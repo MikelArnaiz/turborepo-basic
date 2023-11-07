@@ -75,7 +75,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/.nvmrc') }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Publish dev version
         if: github.event.comment.body == '/publish'
@@ -104,6 +104,10 @@ jobs:
             ### 🚀 The new dev version is released and ready to use:
             ```
             yarn add ${{ env.NPM_PACKAGE_NAME }}@0.0.0-${{ steps.sha.outputs.result }}
+            ```
+
+            ```
+            pnpm add ${{ env.NPM_PACKAGE_NAME }}@0.0.0-${{ steps.sha.outputs.result }}
             ```
             #### happy hacking! 🥷🏿
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}

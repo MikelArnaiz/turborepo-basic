@@ -53,9 +53,10 @@ jobs:
           trim: true
 
       - name: Setup NodeJS using the obtained nvm version
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.node-version.outputs.content }}
+          cache: 'pnpm'
 
       #   # TODO remove this step once all packages are published into GitHub NPM registry
       # - name: Configure git, so we can clone packages that are not from GitHub NPM registry

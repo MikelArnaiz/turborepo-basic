@@ -52,6 +52,12 @@ jobs:
           path: ./.nvmrc
           trim: true
 
+      - name: Installs pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.15.0
+          run_install: false
+
       - name: Setup NodeJS using the obtained nvm version
         uses: actions/setup-node@v3
         with:

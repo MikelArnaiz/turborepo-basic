@@ -90,7 +90,10 @@ jobs:
       - name: Publish alpha version
         id: publish
         if: github.event.comment.body == '/publish'
-        run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
+        # run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
+        run: |
+          result=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)
+          echo "::set-output name=result::$result"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -115,10 +118,6 @@ jobs:
             Content:
             ```
             ${{ steps.publish.outputs.result }}
-            ```
-
-            ```
-            ${{ toJson(steps.publish.outputs) }}
             ```
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 

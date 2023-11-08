@@ -89,6 +89,7 @@ jobs:
         run: pnpm changeset version --snapshot alpha && pnpm i --lockfile-only
 
       - name: Publish alpha version
+        id: publish
         if: github.event.comment.body == '/publish'
         run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
         env:
@@ -103,6 +104,20 @@ jobs:
 
       # - name: Put the package name into env so the next step can access it
       #   run: echo "NPM_PACKAGE_NAME=@${GITHUB_REPOSITORY//cw-/}" >> $GITHUB_ENV
+
+      - name: Comment published version
+        if: github.event.comment.body == '/publish'
+        uses: winterjung/comment@v1.1.0
+        with:
+          type: create
+          issue_number: ${{ github.event.issue.number }}
+          token: ${{ secrets.GH_PAT }}
+          body: |
+            Content:
+            ```
+            ${{ steps.sha.outputs.result }}
+            ```
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       # - name: Publish dev version - Success
       #   if: github.event.comment.body == '/publish'

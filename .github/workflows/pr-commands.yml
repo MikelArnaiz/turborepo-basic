@@ -123,7 +123,10 @@ jobs:
 
       - name: Step3, echos alphaversion output
         id: step3
-        run: echo ${{ steps.alphaversion.outputs.published_versions }}
+        # run: echo "${{ steps.alphaversion.outputs.published_versions }}"
+        run: |
+          FOO=steps.alphaversion.outputs.published_versions
+          echo "$FOO"
 
       - name: Send a rocket so we know the comment is addressed
         uses: dkershner6/reaction-action@v1

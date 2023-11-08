@@ -1,0 +1,72 @@
+name: Changeset status
+
+on:
+  # push:
+  #   branches:
+  #     - '*'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  has-changeset-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the last commit in the PR
+        id: sha
+        uses: actions/github-script@v4
+        with:
+          result-encoding: string
+          script: |
+            const { owner, repo, number } = context.issue;
+            const pr = await github.pulls.get({
+              owner,
+              repo,
+              pull_number: number,
+            });
+            return pr.data.head.sha
+
+      - name: Show what commit hash we put in the mix
+        run: echo Working on the commit hash ${{ steps.sha.outputs.result }}
+
+      - name: Checkout the repository
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ steps.sha.outputs.result }}
+
+      - name: Read NodeJS version from .nvmrc
+        id: node-version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./.nvmrc
+          trim: true
+
+      - name: Installs pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.2
+          run_install: false
+
+      - name: Setup NodeJS using the obtained nvm version
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.node-version.outputs.content }}
+          cache: 'pnpm'
+
+      - name: Authenticate with GitHub NPM registry
+        run: |
+          echo "@catawiki:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT }}" >> ~/.npmrc
+
+      - name: Restore cached node_modules
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/.nvmrc') }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Changeset Status
+        run: pnpm changeset status --since=main

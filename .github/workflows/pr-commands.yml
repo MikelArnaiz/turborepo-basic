@@ -111,9 +111,12 @@ jobs:
         #     echo "test3=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
         #   } >> "$GITHUB_OUTPUT"
         run: |
-          published_versions="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
-          echo "Published versions: $published_versions"
-          echo "published_versions=$published_versions" >> "$GITHUB_OUTPUT"
+          PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
+          echo "Published versions: $PUBLISHED_VERSIONS"
+          echo "published_versions<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$PUBLISHED_VERSIONS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

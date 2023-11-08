@@ -16,7 +16,17 @@ jobs:
     # env:
     #   GITHUB_TOKEN: ${{ c.GH_PAT }}
     #   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
     steps:
+      - name: Step1
+        id: step1
+        run: echo "test=hello" >> "$GITHUB_OUTPUT"
+
+      - name: Step2, echos step1 output
+        id: step2
+        run: echo ${{ steps.step1.outputs.test }}
+
       - name: Send a reaction to say we are working on it
         uses: dkershner6/reaction-action@v1
         with:

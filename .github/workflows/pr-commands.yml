@@ -98,27 +98,27 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           reaction: 'rocket'
 
-      - name: Put the package name into env so the next step can access it
-        run: echo "NPM_PACKAGE_NAME=@${GITHUB_REPOSITORY//cw-/}" >> $GITHUB_ENV
+      # - name: Put the package name into env so the next step can access it
+      #   run: echo "NPM_PACKAGE_NAME=@${GITHUB_REPOSITORY//cw-/}" >> $GITHUB_ENV
 
-      - name: Publish dev version - Success
-        if: github.event.comment.body == '/publish'
-        uses: winterjung/comment@v1.1.0
-        with:
-          type: create
-          issue_number: ${{ github.event.issue.number }}
-          token: ${{ secrets.GH_PAT }}
-          body: |
-            ### 🚀 The new dev version is released and ready to use:
-            ```
-            yarn add ${{ env.NPM_PACKAGE_NAME }}@0.0.0-${{ steps.sha.outputs.result }}
-            ```
+      # - name: Publish dev version - Success
+      #   if: github.event.comment.body == '/publish'
+      #   uses: winterjung/comment@v1.1.0
+      #   with:
+      #     type: create
+      #     issue_number: ${{ github.event.issue.number }}
+      #     token: ${{ secrets.GH_PAT }}
+      #     body: |
+      #       ### 🚀 The new dev version is released and ready to use:
+      #       ```
+      #       yarn add ${{ env.NPM_PACKAGE_NAME }}@0.0.0-${{ steps.sha.outputs.result }}
+      #       ```
 
-            ```
-            pnpm add ${{ env.NPM_PACKAGE_NAME }}@0.0.0-${{ steps.sha.outputs.result }}
-            ```
-            #### happy hacking! 🥷🏿
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      #       ```
+      #       pnpm add ${{ env.NPM_PACKAGE_NAME }}@0.0.0-${{ steps.sha.outputs.result }}
+      #       ```
+      #       #### happy hacking! 🥷🏿
+      #     GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       - name: Send a thumbs down when something went wrong
         if: ${{ failure() }}

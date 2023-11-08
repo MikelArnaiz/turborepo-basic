@@ -10,7 +10,7 @@ on:
       - synchronize
 
 jobs:
-  Has Changeset file:
+  has-changeset-file:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch the last commit in the PR

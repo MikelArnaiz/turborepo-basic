@@ -31,9 +31,13 @@ jobs:
         run: echo Working on the commit hash ${{ steps.sha.outputs.result }}
 
       - name: Checkout the repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3
         with:
           ref: ${{ steps.sha.outputs.result }}
+          # check out full history
+          # Needed to later on compare the Changeset status
+          # https://github.com/changesets/changesets/issues/1055#issuecomment-1602572294
+          fetch-depth: 0
 
       - name: Read NodeJS version from .nvmrc
         id: node-version

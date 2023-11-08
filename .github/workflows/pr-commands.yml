@@ -114,7 +114,7 @@ jobs:
           body: |
             Content:
             ```
-            ${{ steps.sha.outputs.result }}
+            ${{ steps.publish.outputs.result }}
             ```
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 

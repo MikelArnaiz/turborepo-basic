@@ -69,4 +69,4 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run Changeset Status
-        run: pnpm changeset status --since=main
+        run: pnpm changeset status --since=origin/main

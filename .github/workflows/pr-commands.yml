@@ -87,10 +87,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Update versions
+        if: github.event.comment.body == '/publish'
+        # run: pnpm changeset version --snapshot ${{ steps.sha.outputs.result }} && pnpm i --lockfile-only
+        run: pnpm changeset version --snapshot dev && pnpm i --lockfile-only
+
       - name: Publish dev version
         if: github.event.comment.body == '/publish'
         # run: yarn release --mode=prerelease --sha=${{ steps.sha.outputs.result }}
-        run: pnpm run changeset:version:snapshot
+        run: pnpm changeset publish --no-git-tag --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

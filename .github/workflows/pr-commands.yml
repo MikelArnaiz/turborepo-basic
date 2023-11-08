@@ -101,10 +101,15 @@ jobs:
         if: github.event.comment.body == '/publish'
         id: alphaversion
         # run: echo "pnpm changeset publish --tag alpha --no-git-tag --snapshot" >> "$GITHUB_OUTPUT"
-        run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
+        # run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
+        run: echo "test2=pnpm changeset publish --tag alpha --no-git-tag --snapshot" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Step3, echos alphaversion output
+        id: step3
+        run: echo ${{ steps.alphaversion.outputs.test2 }}
 
       - name: Send a rocket so we know the comment is addressed
         uses: dkershner6/reaction-action@v1

@@ -116,6 +116,10 @@ jobs:
             ```
             ${{ steps.publish.outputs.result }}
             ```
+
+            ```
+            ${{ toJson(steps.publish.outputs) }}
+            ```
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       # - name: Publish dev version - Success

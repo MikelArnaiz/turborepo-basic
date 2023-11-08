@@ -88,12 +88,9 @@ jobs:
         run: pnpm changeset version --snapshot alpha && pnpm i --lockfile-only
 
       - name: Publish alpha version
-        id: publish
         if: github.event.comment.body == '/publish'
-        # run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
-        run: |
-          result=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)
-          echo "::set-output name=result::$result"
+        id: alphaversion
+        run: echo "pnpm changeset publish --tag alpha --no-git-tag --snapshot" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -117,7 +114,19 @@ jobs:
           body: |
             Content:
             ```
-            ${{ steps.publish.outputs.result }}
+            ${{ steps.alphaversion.outputs.result }}
+            ```
+
+            ```
+            ${{ steps.alphaversion.outputs.content }}
+            ```
+
+            ```
+            ${{ $GITHUB_OUTPUT }}
+            ```
+
+            ```
+            ${{join(steps.alphaversion.outputs.*, '\n')}}
             ```
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 

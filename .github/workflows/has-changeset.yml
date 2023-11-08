@@ -1,4 +1,4 @@
-name: Check Changeset Status
+name: Changeset status
 
 on:
   # push:
@@ -10,9 +10,8 @@ on:
       - synchronize
 
 jobs:
-  check-changeset-status:
+  has-changeset-file:
     runs-on: ubuntu-latest
-    name: Checks has Changeset file
     steps:
       - name: Fetch the last commit in the PR
         id: sha

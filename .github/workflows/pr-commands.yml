@@ -85,6 +85,10 @@ jobs:
         if: github.event.comment.body == '/publish'
         run: pnpm changeset version --snapshot alpha && pnpm i --lockfile-only
 
+      - name: Setup .npmrc
+        # run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+
       - name: Publish alpha version
         if: github.event.comment.body == '/publish'
         run: pnpm changeset publish --tag alpha --no-git-tag --snapshot

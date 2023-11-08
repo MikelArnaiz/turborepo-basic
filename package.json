@@ -7,6 +7,7 @@
     "changeset:exit": "changeset pre exit",
     "changeset:publish": "pnpm i --lockfile-only && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
+    "changeset:version:snapshot": "changeset version --snapshot && pnpm i --lockfile-only",
     "changeset:version:pre": "pnpm changeset:enter && pnpm changeset:version",
     "changeset:version:pre:exit": "pnpm changeset:exit && pnpm changeset:version",
     "dev": "turbo run dev",

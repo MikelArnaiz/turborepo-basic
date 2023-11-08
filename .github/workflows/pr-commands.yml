@@ -89,7 +89,8 @@ jobs:
 
       - name: Publish dev version
         if: github.event.comment.body == '/publish'
-        run: yarn release --mode=prerelease --sha=${{ steps.sha.outputs.result }}
+        # run: yarn release --mode=prerelease --sha=${{ steps.sha.outputs.result }}
+        run: pnpm run changeset:version:snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

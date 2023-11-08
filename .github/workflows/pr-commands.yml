@@ -67,13 +67,12 @@ jobs:
       - name: Print pnpm version
         run: pnpm -v
 
-      # - name: Setup .npmrc
-      #   # run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      #   run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
-
       - name: Authenticate with GitHub NPM registry
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+
+      # - name: Authenticate with GitHub NPM registry
+      #   run: |
+      #     echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
 
       - name: Restore cached node_modules
         uses: actions/cache@v2

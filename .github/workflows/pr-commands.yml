@@ -106,7 +106,10 @@ jobs:
         # run: |
         #   OUTPUT_VERSION=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)
         #   echo "::set-output name=OUTPUT_VERSION::$OUTPUT_VERSION"
-        run: echo "test3=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)" >> "$GITHUB_OUTPUT"
+        run: |
+          {
+              echo "test3=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
+          } >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

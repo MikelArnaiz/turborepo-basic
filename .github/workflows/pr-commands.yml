@@ -103,16 +103,17 @@ jobs:
         # run: echo "pnpm changeset publish --tag alpha --no-git-tag --snapshot" >> "$GITHUB_OUTPUT"
         # run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
         # https://stackoverflow.com/q/65605228
-        run: |
-          OUTPUT_VERSION=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)
-          echo "::set-output name=OUTPUT_VERSION::$OUTPUT_VERSION"
+        # run: |
+        #   OUTPUT_VERSION=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)
+        #   echo "::set-output name=OUTPUT_VERSION::$OUTPUT_VERSION"
+        run: echo "test3=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Step3, echos alphaversion output
         id: step3
-        run: echo ${{ steps.alphaversion.outputs.OUTPUT_VERSION }}
+        run: echo ${{ steps.alphaversion.outputs.test3 }}
 
       - name: Send a rocket so we know the comment is addressed
         uses: dkershner6/reaction-action@v1

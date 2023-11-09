@@ -103,9 +103,10 @@ jobs:
         # https://stackoverflow.com/q/65605228
         run: |
           PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
+          PUBLISHED_VERSIONS_TRIMMED=$(echo "$PUBLISHED_VERSIONS" | tail -n +4)
           echo "Published versions: $PUBLISHED_VERSIONS"
           echo "published_versions<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$PUBLISHED_VERSIONS" >> "$GITHUB_OUTPUT"
+          echo "$PUBLISHED_VERSIONS_TRIMMED" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
         env:
@@ -127,8 +128,8 @@ jobs:
       # - name: Put the package name into env so the next step can access it
       #   run: echo "NPM_PACKAGE_NAME=@${GITHUB_REPOSITORY//cw-/}" >> $GITHUB_ENV
 
-      - name: Remove first three lines
-        run: echo "${{ steps.alphaversion.outputs.published_versions }}" | tail -n +4
+      # - name: Remove first three lines
+      #   run: echo "${{ steps.alphaversion.outputs.published_versions }}" | tail -n +4
 
       - name: Comment published version
         if: github.event.comment.body == '/publish'

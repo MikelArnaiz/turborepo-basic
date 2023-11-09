@@ -118,6 +118,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Filter published log
+        if: github.event.comment.body == '/publish'
+        id: filter_published_log
+        run: |
+          FILTERED_LOG=$(echo "$steps.alphaversion.outputs.published_log" | grep -A -B 1 "success packages published successfully:")
+          echo "filtered_log<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$FILTERED_LOG" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
       # - name: Echos alphaversion output
       #   if: github.event.comment.body == '/publish'
       #   run: |
@@ -138,13 +147,7 @@ jobs:
 
       - name: Comment published version
         if: github.event.comment.body == '/publish'
-        id: comment_published
         uses: winterjung/comment@v1.1.0
-        run: |
-          FILTERED_LOG=$(echo "$steps.alphaversion.outputs.published_log" | grep -A -B 1 "success packages published successfully:")
-          echo "filtered_log<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$FILTERED_LOG" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
         with:
           type: create
           issue_number: ${{ github.event.issue.number }}
@@ -156,7 +159,7 @@ jobs:
           body: |
             ### 🚀 The new dev version is released and ready to use:
             ```
-            ${{ steps.comment_published.outputs.filtered_log }}
+            ${{ steps.filter_published_log.outputs.filtered_log }}
             ```
 
             Full log:

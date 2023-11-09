@@ -127,6 +127,9 @@ jobs:
       # - name: Put the package name into env so the next step can access it
       #   run: echo "NPM_PACKAGE_NAME=@${GITHUB_REPOSITORY//cw-/}" >> $GITHUB_ENV
 
+      - name: Remove first three lines
+        run: echo "${{ steps.alphaversion.outputs.published_versions }}" | tail -n +4
+
       - name: Comment published version
         if: github.event.comment.body == '/publish'
         uses: winterjung/comment@v1.1.0
@@ -137,10 +140,6 @@ jobs:
           body: |
             ```
             ${{ steps.alphaversion.outputs.published_versions }}
-            ```
-
-            ```
-            ${{ steps.alphaversion.outputs.published_versions | tail -n +4 }}
             ```
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 

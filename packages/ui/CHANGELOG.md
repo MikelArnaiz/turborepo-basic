@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.6
+
+### Patch Changes
+
+- e07d72b: change button text
+
 ## 1.0.5
 
 ### Patch Changes

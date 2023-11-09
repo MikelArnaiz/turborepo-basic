@@ -138,7 +138,13 @@ jobs:
 
       - name: Comment published version
         if: github.event.comment.body == '/publish'
+        id: comment_published
         uses: winterjung/comment@v1.1.0
+        run: |
+          FILTERED_LOG=$(echo "$steps.alphaversion.outputs.published_log" | grep -A -B 1 "success packages published successfully:")
+          echo "filtered_log<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$FILTERED_LOG" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
         with:
           type: create
           issue_number: ${{ github.event.issue.number }}
@@ -146,10 +152,11 @@ jobs:
           # Explanation,
           # grep -A selects all lines after the string provided
           # -B 1 doesn't include the provided search string
+          # ${{ steps.alphaversion.outputs.filtered_log | grep -A -B 1 "success packages published successfully:" }}
           body: |
             ### 🚀 The new dev version is released and ready to use:
             ```
-            ${{ steps.alphaversion.outputs.published_log | grep -A -B 1 "success packages published successfully:" }}
+            ${{ steps.comment_published.outputs.filtered_log }}
             ```
 
             Full log:

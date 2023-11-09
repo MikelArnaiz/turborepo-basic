@@ -101,12 +101,17 @@ jobs:
         if: github.event.comment.body == '/publish'
         id: alphaversion
         # https://stackoverflow.com/q/65605228
+        # run: |
+        #   PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
+        #   PUBLISHED_VERSIONS_TRIMMED=$(echo "$PUBLISHED_VERSIONS" | tail -n +4)
+        #   echo "Published versions: $PUBLISHED_VERSIONS"
+        #   echo "published_versions<<EOF" >> "$GITHUB_OUTPUT"
+        #   echo "$PUBLISHED_VERSIONS_TRIMMED" >> "$GITHUB_OUTPUT"
+        #   echo "EOF" >> "$GITHUB_OUTPUT"
         run: |
-          PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
-          PUBLISHED_VERSIONS_TRIMMED=$(echo "$PUBLISHED_VERSIONS" | tail -n +4)
-          echo "Published versions: $PUBLISHED_VERSIONS"
+          PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot 2>&1)"
           echo "published_versions<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$PUBLISHED_VERSIONS_TRIMMED" >> "$GITHUB_OUTPUT"
+          echo "$PUBLISHED_VERSIONS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
         env:
@@ -142,7 +147,6 @@ jobs:
             ```
             ${{ steps.alphaversion.outputs.published_versions }}
             ```
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
       # - name: Publish dev version - Success
       #   if: github.event.comment.body == '/publish'

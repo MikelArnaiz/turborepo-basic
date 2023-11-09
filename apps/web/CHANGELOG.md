@@ -1,5 +1,12 @@
 # web
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [78b4133]
+  - marnaiz-turborepo-ui@1.0.5
+
 ## 1.0.10
 
 ### Patch Changes

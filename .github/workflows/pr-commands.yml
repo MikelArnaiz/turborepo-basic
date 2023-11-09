@@ -105,13 +105,13 @@ jobs:
         #   PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
         #   PUBLISHED_VERSIONS_TRIMMED=$(echo "$PUBLISHED_VERSIONS" | tail -n +4)
         #   echo "Published versions: $PUBLISHED_VERSIONS"
-        #   echo "published_versions<<EOF" >> "$GITHUB_OUTPUT"
+        #   echo "published_log<<EOF" >> "$GITHUB_OUTPUT"
         #   echo "$PUBLISHED_VERSIONS_TRIMMED" >> "$GITHUB_OUTPUT"
         #   echo "EOF" >> "$GITHUB_OUTPUT"
         run: |
-          PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot 2>&1)"
-          echo "published_versions<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$PUBLISHED_VERSIONS" >> "$GITHUB_OUTPUT"
+          PUBLISHED_LOG="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot 2>&1)"
+          echo "published_log<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$PUBLISHED_LOG" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
         env:
@@ -121,7 +121,7 @@ jobs:
       # - name: Echos alphaversion output
       #   if: github.event.comment.body == '/publish'
       #   run: |
-      #     RESULT=$(echo "$steps.alphaversion.outputs.published_versions" | tail -n +4)
+      #     RESULT=$(echo "$steps.alphaversion.outputs.published_log" | tail -n +4)
       #     echo "$RESULT"
 
       - name: Send a rocket so we know the comment is addressed
@@ -134,7 +134,7 @@ jobs:
       #   run: echo "NPM_PACKAGE_NAME=@${GITHUB_REPOSITORY//cw-/}" >> $GITHUB_ENV
 
       # - name: Remove first three lines
-      #   run: echo "${{ steps.alphaversion.outputs.published_versions }}" | tail -n +4
+      #   run: echo "${{ steps.alphaversion.outputs.published_log }}" | tail -n +4
 
       - name: Comment published version
         if: github.event.comment.body == '/publish'
@@ -143,9 +143,18 @@ jobs:
           type: create
           issue_number: ${{ github.event.issue.number }}
           token: ${{ secrets.GH_PAT }}
+          # Explanation,
+          # grep -A selects all lines after the string provided
+          # -B 1 doesn't include the provided search string
           body: |
+            ### 🚀 The new dev version is released and ready to use:
             ```
-            ${{ steps.alphaversion.outputs.published_versions }}
+            ${{ steps.alphaversion.outputs.published_log | grep -A -B 1 "success packages published successfully:" }}
+            ```
+
+            Full log:
+            ```
+            ${{ steps.alphaversion.outputs.published_log }}
             ```
 
       # - name: Publish dev version - Success

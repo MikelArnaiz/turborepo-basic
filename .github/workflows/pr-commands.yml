@@ -114,7 +114,9 @@ jobs:
 
       - name: Echos alphaversion output
         if: github.event.comment.body == '/publish'
-        run: echo ${{ steps.alphaversion.outputs.published_versions }}
+        run: |
+          RESULT=$(echo "$steps.alphaversion.outputs.published_versions" | tail -n +4)
+          echo "$RESULT"
 
       - name: Send a rocket so we know the comment is addressed
         uses: dkershner6/reaction-action@v1

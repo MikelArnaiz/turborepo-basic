@@ -121,8 +121,11 @@ jobs:
       - name: Filter published log
         if: github.event.comment.body == '/publish'
         id: filter_published_log
+        # Explanation,
+        # grep -A selects 1000 lines after the string provided, 1000 is just a big number
+        # sed '1d' removes the 1st line because grep -A is inclusive
         run: |
-          FILTERED_LOG=$(echo "$steps.alphaversion.outputs.published_log" | grep -A -B 1 "success packages published successfully:")
+          FILTERED_LOG=$(echo "$steps.alphaversion.outputs.published_log" | grep -A 1000 "success packages published successfully:" | sed '1d')
           echo "filtered_log<<EOF" >> "$GITHUB_OUTPUT"
           echo "$FILTERED_LOG" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -152,10 +155,6 @@ jobs:
           type: create
           issue_number: ${{ github.event.issue.number }}
           token: ${{ secrets.GH_PAT }}
-          # Explanation,
-          # grep -A selects all lines after the string provided
-          # -B 1 doesn't include the provided search string
-          # ${{ steps.alphaversion.outputs.filtered_log | grep -A -B 1 "success packages published successfully:" }}
           body: |
             ### 🚀 The new dev version is released and ready to use:
             ```

@@ -100,16 +100,7 @@ jobs:
       - name: Publish alpha version
         if: github.event.comment.body == '/publish'
         id: alphaversion
-        # run: echo "pnpm changeset publish --tag alpha --no-git-tag --snapshot" >> "$GITHUB_OUTPUT"
-        # run: pnpm changeset publish --tag alpha --no-git-tag --snapshot
         # https://stackoverflow.com/q/65605228
-        # run: |
-        #   OUTPUT_VERSION=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)
-        #   echo "::set-output name=OUTPUT_VERSION::$OUTPUT_VERSION"
-        # run: |
-        #   {
-        #     echo "test3=$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
-        #   } >> "$GITHUB_OUTPUT"
         run: |
           PUBLISHED_VERSIONS="$(pnpm changeset publish --tag alpha --no-git-tag --snapshot)"
           echo "Published versions: $PUBLISHED_VERSIONS"
@@ -121,12 +112,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Step3, echos alphaversion output
-        id: step3
-        # run: echo "${{ steps.alphaversion.outputs.published_versions }}"
-        run: |
-          FOO=steps.alphaversion.outputs.published_versions
-          echo "$FOO"
+      - name: Echos alphaversion output
+        if: github.event.comment.body == '/publish'
+        run: echo ${{ steps.alphaversion.outputs.published_versions }}
 
       - name: Send a rocket so we know the comment is addressed
         uses: dkershner6/reaction-action@v1
@@ -145,7 +133,6 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           token: ${{ secrets.GH_PAT }}
           body: |
-            Content:
             ```
             ${{ steps.alphaversion.outputs.published_versions }}
             ```

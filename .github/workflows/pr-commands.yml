@@ -138,22 +138,24 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           token: ${{ secrets.GH_PAT }}
           body: |
-            ### 🚀 The new dev version is released. You can install it
-
-            with yarn:
+            ### 🚀 New alpha version released.
+            You can install it with yarn:
             ```
             ${{ steps.yarn_command.outputs.yarn_add }}
             ```
 
-            with pnpm:
+            or with pnpm:
             ```
             ${{ steps.pnpm_command.outputs.pnpm_add }}
             ```
 
-            Full log:
-            ```
-            ${{ steps.publish_alpha.outputs.published_log }}
-            ```
+            <details>
+              <summary>Full log</summary>
+
+              ```
+              ${{ steps.publish_alpha.outputs.published_log }}
+              ```
+            </details>
 
       - name: Send a thumbs down when something went wrong
         if: ${{ failure() }}

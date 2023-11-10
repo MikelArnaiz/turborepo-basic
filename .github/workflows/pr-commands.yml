@@ -130,7 +130,7 @@ jobs:
         # sed '1d' removes the 1st line because grep -A is inclusive
         run: |
           published_log="${{ steps.alphaversion.outputs.published_log }}"
-          FILTERED_LOG=$(echo "$published_log" | grep -A 1000 "success packages published successfully:" | sed '1d')
+          FILTERED_LOG=$(echo "$published_log" | grep -A 1000 "success packages published successfully:" | sed '1d' | grep -oP '🦋  \K.*' | sed 's/^/yarn add /')
           echo "filtered_log<<EOF" >> "$GITHUB_OUTPUT"
           echo "$FILTERED_LOG" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"

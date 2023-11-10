@@ -139,9 +139,6 @@ Turborepo is a task runner, it won't create package versions itself, for that we
 
    https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
 
-   ‼️ TODO explain how ands why
-
-1. ‼️ TODO check whether the release file is automatically added
 1. Add/Replace `.github/workflows/release.yml` file with the following content.
 
    Note, it references the previously create PAT, variable name should match.

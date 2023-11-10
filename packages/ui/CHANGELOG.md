@@ -1,5 +1,11 @@
 # marnaiz-turborepo-ui
 
+## 1.0.10
+
+### Patch Changes
+
+- 081cf27: v21
+
 ## 1.0.9
 
 ### Patch Changes

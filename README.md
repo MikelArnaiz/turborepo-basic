@@ -33,6 +33,10 @@ To build all apps and packages, run:
 pnpm build
 ```
 
+## Presentation
+
+[Slides](https://docs.google.com/presentation/d/1mDaGhvHDLGVP6ZCIdGP3pp3i4fs7m1txl39HzhrJwoI/edit#slide=id.g9ffa1fb67e_0_54)
+
 ## Package managers
 
 ### Pnpm

@@ -130,9 +130,27 @@ jobs:
         # sed '1d' removes the 1st line because grep -A is inclusive
         run: |
           published_log="${{ steps.alphaversion.outputs.published_log }}"
-          FILTERED_LOG=$(echo "$published_log" | grep -A 1000 "success packages published successfully:" | sed '1d' | grep -oP '🦋  \K.*' | sed 's/^/yarn add /')
+          FILTERED_LOG=$(echo "$published_log" | grep -A 1000 "success packages published successfully:" | sed '1d' | grep -oP '🦋  \K.*')
           echo "filtered_log<<EOF" >> "$GITHUB_OUTPUT"
           echo "$FILTERED_LOG" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create yarn command
+        if: github.event.comment.body == '/publish'
+        id: yarn_command
+        run: |
+          yarn_add="${{ steps.alphaversion.outputs.filter_published_log }}"
+          YARN_ADD=$(echo "$yarn_add" | sed 's/^/yarn add /')
+          echo "$YARN_ADD" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create pnpm command
+        if: github.event.comment.body == '/publish'
+        id: pnpm_command
+        run: |
+          pnpm_add="${{ steps.alphaversion.outputs.filter_published_log }}"
+          PNPM_ADD=$(echo "$pnpm_add" | sed 's/^/pnpm add /')
+          echo "$PNPM_ADD" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       # - name: Echos alphaversion output
@@ -164,6 +182,16 @@ jobs:
             ### 🚀 The new dev version is released and ready to use:
             ```
             ${{ steps.filter_published_log.outputs.filtered_log }}
+            ```
+
+            With yarn
+            ```
+            ${{ steps.yarn_command.outputs.yarn_add }}
+            ```
+
+            With pnpm
+            ```
+            ${{ steps.pnpm_command.outputs.pnpm_add }}
             ```
 
             Full log:

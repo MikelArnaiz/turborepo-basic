@@ -1,18 +1,42 @@
 # Turborepo monorepo
 
-Welcome to this monorepo POC, the technology used is [Turborepo](https://turbo.build/repo).
-This repository was created initially with the official starter of Turborepo;
+Welcome to this monorepo Proof of Concept (POC), powered by [Turborepo](https://turbo.build/repo).
+
+This repository was initially set up using the official Turborepo starter:
 
 ```sh
 npx create-turbo@latest
 ```
 
-It however includes many changes to assess if a monorepo is the right tool for us.
+However, numerous modifications have been made to evaluate whether a monorepo is the right fit for our needs. To understand the changes made to the original template, refer to [How was this project set up](./docs/setup.md) in this readme.
 
-For a description of the changes made to the original template check [How was this project set up](#how-was-this-project-set-up) in this readme.
+For ongoing questions and TODOs related to this POC, please check [TODOs](./docs/TODOs.md).
 
-For the still open questions and TODOs of this POC check [TODOs](./TODOs.md)
-.
+## Motivation
+
+This POC is exclusively focused on Turborepo. While there are alternative solutions like Nx, time constraints led us to concentrate solely on Turborepo. Here are a few reasons for choosing Turborepo:
+
+- Alignment with our tech stack: Turborepo is developed by Vercel, the same company behind Next.js.
+- Future-proof: It is expected to eventually merge into a unified tool with [Turbopack](https://turbo.build/pack), the successor to Webpack.
+
+## Getting Started
+
+To develop all apps and packages, use the following command:
+
+```
+pnpm dev
+```
+
+To build all apps and packages, run:
+
+```
+pnpm build
+```
+
+### Package managers
+
+This POC uses `pnpm` as a package manager.
+Refer to [pnpm.io/installation](https://pnpm.io/installation) for installation instructions.
 
 ## What's inside?
 
@@ -24,185 +48,7 @@ This Turborepo includes the following packages/apps:
 - `web`: another [Next.js](https://nextjs.org/) app
 - `ui`: a stub React component library shared by both `web` and `docs` applications. Published to npm as `marnaiz-turborepo-ui`
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo. Published to npm as `@marnaiz/turborepo-tsconfig`
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting.
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-## How was this project set up
-
-The following steps are mere informative to understand how to set up a turborepo from scratch.
-You don't need to do this, it has already been done.
-
-### Scalfolding
-
-Project uses [Turborepo starter](https://github.com/vercel/turbo/tree/main/examples/basic) basic template.
-
-1. [install pnpm](https://pnpm.io/installation)
-
-   This POC uses `pnpm` as it can handle workspaces better than `npm`/`yarn`.
-
-1. `pnpm dlx create-turbo@latest`
-
-### Package name changes (optional)
-
-Internal package names where prefixed with either `marnaiz-` or `@marnaiz/` so to be able to release them publically to `npm` and not have collisions with other package names.
-
-1. ui
-   1. `packages/ui/package.json`'s `name` was changed to `marnaiz-turborepo-ui`.
-   1. To propagate the changes run `pnpm install`
-   1. Change broken references:
-   1. Replace `ui` with `marnaiz-turborepo-ui`:
-      1. `apps/docs/app/page.tsx` import now should be `from "marnaiz-turborepo-ui"`
-      1. `apps/docs/next.config.js`, replace ` ["ui"]` with `["marnaiz-turborepo-ui"]`
-      1. `apps/web/app/page.tsx` import now should be `from "marnaiz-turborepo-ui"`
-      1. `apps/docs/next.config.js`, replace ` ["ui"]` with `["marnaiz-turborepo-ui"]`
-1. tsconfig
-   1. `packages/tsconfig/package.json`'s name was changed from `tsconfig` to `@marnaiz/turborepo-tsconfig`
-   1. Change references:
-      1. in `/package.json` (root), `apps/docs/package.json`, `apps/web/package.json`, `packages/ui/package.json`
-      1. `/tsconfig.json`, `apps/docs/tsconfig.json`, `apps/web/tsconfig.json`, `packages/ui/tsconfig.json` extends property
-
-### Adds @changesets
-
-Turborepo is a task runner, it won't create package versions itself, for that we use [changesets](https://github.com/changesets/changesets).
-
-1. Install `@changesets/cli`.
-
-   ```
-   pnpm install @changesets/cli -D
-   ```
-
-1. It should have automatically added the files
-
-   1. `changeset/README.md`
-   1. `changeset/config.json`, with:
-
-      ```json
-      {
-        "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-        "changelog": "@changesets/cli/changelog",
-        "commit": false,
-        "fixed": [],
-        "linked": [],
-        "access": "restricted",
-        "baseBranch": "main",
-        "updateInternalDependencies": "patch",
-        "ignore": []
-      }
-      ```
-
-   1. change access in `changeset/config.json`.
-      This sets how packages are published. If access: `restricted`, packages will be published as private, requiring log in to an npm account with access to install. If access: `public`, the packages will be made available on the public registry.
-
-      https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public
-
-1. Add to `package.json`'s scripts
-
-   ```json
-   "changeset": "changeset",
-   "changeset:enter": "changeset pre enter next",
-   "changeset:pre": "pnpm changeset:enter && pnpm changeset:version",
-   "changeset:exit": "changeset pre exit",
-   "changeset:publish": "changeset publish",
-   "changeset:version": "changeset version && pnpm i --lockfile-only",
-   "release": " turbo run build --filter=docs^... && changeset publish",
-   "release:pre": "pnpm changeset:pre && pnpm release",
-   ```
-
-1. Create a GitHub PAT, e.g `GH_MY_PAT`.
-
-   https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-
-1. Add/Replace `.github/workflows/release.yml` file with the following content.
-
-   Note, it references the previously create PAT, variable name should match.
-
-   There are inline comments, pay attention to them.
-
-   ```yml
-   name: Release
-
-   on:
-     push:
-       branches:
-         - main
-
-   concurrency: ${{ github.workflow }}-${{ github.ref }}
-
-   jobs:
-     release:
-       name: Release
-       runs-on: ubuntu-latest
-       steps:
-         - name: Checkout Repo
-           uses: actions/checkout@v2
-           # based on
-           # https://github.com/changesets/action/issues/295#issuecomment-1549427775
-           # https://github.com/ad-m/github-push-action/issues/44#issuecomment-581706892
-           with:
-             persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-             fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
-
-         - name: Install pnpm
-           uses: pnpm/action-setup@v2
-           with:
-             version: 8
-
-         - name: Setup Node.js 16.x
-           uses: actions/setup-node@v3
-           with:
-             node-version: 16.x
-             cache: 'pnpm'
-
-         - name: Install Dependencies
-           run: pnpm install
-
-         - name: Create Release Pull Request or Publish to npm
-           id: changesets
-           uses: changesets/action@v1
-           with:
-             # To prevent ERR_PNPM_OUTDATED_LOCKFILE error.
-             # PR get's merge with changes in package.json but it doesn't update the lock file
-             # https://github.com/changesets/action/issues/203#issuecomment-1460115073
-             version: pnpm run version-ci
-             # This expects you to have a script called release which does a build for your packages and calls changeset publish
-             publish: pnpm run release
-           env:
-             GITHUB_TOKEN: ${{ secrets.GH_MY_PAT }}
-             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-         # DISABLED FOR NOW
-         # - name: Send a Slack notification if a publish happens
-         #   if: steps.changesets.outputs.published == 'true'
-         #   # You can do something when a publish happens.
-         #   run: my-slack-bot send-notification --message "A new version of ${GITHUB_REPOSITORY} was published!"
-   ```
+- `tsconfig`: `tsconfig.json`s used throughout the monorepo. Published to npm as `@marnaiz/turborepo-tsconfig
 
 ## Changes, versioning and releases
 
@@ -210,7 +56,7 @@ Our research shows that the monorepo philosophy is to work _always_ with the lat
 That's achived by pointing dependencies to `workspace:*`, e.g.:
 
 ```
-"eslint-config-custom": "workspace:*",3
+"eslint-config-custom": "workspace:*",
 ```
 
 This would mean a big change in the way we work.
@@ -219,81 +65,101 @@ Until now you were able to create a release with breaking changes and it was up 
 
 With a monorepo where everything is always working on _latest_ the responsibility of fixing those breaking changes relies on the person introducing the breaking changes.
 
-To avoid such a radical change we can and will be using versioning, releasing packages to npm. We will do that with a 3rd party tool; [changeset](https://github.com/changesets/changesets).
+To avoid such a radical change we can and will be using versioning, releasing packages to the registry. We will do that with a 3rd party tool; [changeset](https://github.com/changesets/changesets).
 
 For example, to release a new version of the ui package, including changes to the `<Button>` component, we need to run a bunch of commands.
 
 Note, pay attention to the order as there are alternatives.
 
-### 1. Create changeset file
+1.  Locally
 
-When we have all the changes we need and want to prepate a release we have to create a changeset file. It get's generated by running
+    1.  Create changeset file
 
-```
-pnpm changeset
-```
+        1. When we have all the changes we need and want to prepate a release we have to create a changeset file. It get's generated by running
 
-![](/docs/changeset.png)
+           ```
+           pnpm changeset
+           ```
 
-It will ask you which packages to update, usually those with changes.
+           ![](/docs/images/changeset.png)
 
-Choose between major, minor and patch
+           It will ask you which packages to update, usually those with changes.
 
-![](/docs/changeset-patch.png)
+        1. Choose between major, minor and patch
 
-Write a message for the release notes.
+           ![](/docs/images/changeset-patch.png)
 
-It will generate a _3 word_ file inside `./.changeset/` directory. File that you should commit.
+        1. Write a message for the release notes.
 
-![](/docs/changeset-file.png)
+           It will generate a _3 word_ file inside `./.changeset/` directory. File that you should commit.
 
-### 2a. Updating package versions (locally)
+           ![](/docs/images/changeset-file.png)
 
-If you want your branch to include the changes updating the package.json files, run
+    2.  Updating package versions (locally)
 
-```
-changeset:version
-```
+        If you want your branch to include the changes updating the package.json files, run
+
+        ```
+        pnpm changeset:version
+        ```
+
+    3.  Releasing versions, locally
+
+        To publish the packages to the registry from your machine, run
+
+        ```
+        pnpm changeset:publish
+
+        ```
+
+1.  In PR
+
+    1. As 1.1
+    1. Updating package versions (by GitHub action)
+
+       Alternatively to `2a` you can create a PR with just the changeset file. Once this PR gets merged the GitHub bot will create a new PR with upgrading the `package.json`'s files.
+
+    1. Releasing versions, by Github action
+
+       After the PR created by GitHub bot mentioned in 2b get's merged, the packages will be released.
+
+### Alpha and prerelease versions
 
 #### Prereleases
 
-Note, if you want to create a prerelease, e.g. `1.2.3-next.0`, then the command should be
+To create a prerelease, e.g. `1.2.3-next.0`, then the command should be
 
 ```
-changeset:version:pre
+
+pnpm changeset:version:pre
+
 ```
 
 Once you are ready to release a stable release, `1.2.3`, you should
 
 ```
-changeset:version:pre:exit
-```
 
-### 3a. Releasing versions, locally
-
-To publish the packages to the registry from your machine, run
+pnpm changeset:version:pre:exit
 
 ```
-pnpm changeset:publish
-```
 
-### 2b. Updating package versions (by GitHub action)
+### Alpha releases
 
-Alternatively to `2a` you can create a PR with just the changeset file. Once this PR gets merged the GitHub bot will create a new PR with upgrading the `package.json`'s files.
+In PRs you can add a `/publish` comment, that will trigger an alpha release.
 
-### 3b. Releasing versions, by Github action
-
-After the PR created by GitHub bot mentioned in 2b get's merged, the packages will be released.
+![](./docs/images/alpha-release.png)
 
 ## Remote Caching
 
 Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel.
 
 ```
+
 cd my-turborepo
 npx turbo login
+
 ```
 
 This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
@@ -301,7 +167,9 @@ This will authenticate the Turborepo CLI with your [Vercel account](https://verc
 Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
 
 ```
+
 npx turbo link
+
 ```
 
 It can also be set up to use a [custom server for remore caching](https://turbo.build/repo/docs/core-concepts/remote-caching#custom-remote-caches).
@@ -315,8 +183,8 @@ As a mere showcase I have deployed the apps to Vercel.
 
 To do so you have to create a project per `app` you want to deploy, and make sure to change the config and point to each app directory:
 
-![](./docs/vercel-app-docs.png)
-![](./docs/vercel-app-web.png)
+![](./docs/images/vercel-app-docs.png)
+![](./docs/images/vercel-app-web.png)
 
 ## Bundling
 
@@ -353,16 +221,3 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
-
-## Concerns
-
-### IDE code vs version used
-
-Working in a monorepo has the great advantage that you can jump to any file easily. This might become a doble side sword when using versioning.
-
-Let's assume you are working on an app of the monorepo and this app uses a package from the monorepo.
-You want to know how does the package work and access it.
-
-This might be misleading because the code you see is the latest but the app could be using (pointing in `package.json`) to an older version.
-
-In a non monorepo environment, the reference of an import would take you to the types declaration, no to the source code.

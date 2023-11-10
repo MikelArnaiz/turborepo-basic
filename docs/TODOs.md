@@ -7,20 +7,8 @@
 ## Should
 
 - [ ] Read https://github.com/changesets/changesets/blob/main/docs/common-questions.md
-- [ ] try again with yarn, perhaps yarn 2 or yarn 3
-- [x] try what happens with the PR bot and GH action if
-  - [x] instead of a changeset file, commit the changes from `changeset version`, the `package.json`'s updated
-- [x] deploy to vercel and document learnings
-- [ ] 1st commit is from `create-turbo@`. Commit is `feat(create-turbo): create basic`. Does this mean they support `conventional commits`?
-  - [ ] How to enforce the commit messages.
-  - [ ] Would a commit with `BREAKING CHANGE` produce a major release?
-  - [ ] move back tsconfig dependency to dev
 
 ## Have to
-
-- [x] add the missing files described in the impact analisys, e.g
-  - [x] Prettier
-  - [x] editorconfig
 
 ## Nice to have
 

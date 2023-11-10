@@ -8,7 +8,8 @@ jobs:
   commands:
     if: |
       github.event.issue.pull_request &&
-      (github.event.comment.body == '/publish')
+      (github.event.comment.body == '/publish') &&
+      (github.event.pull_request.title != 'Version Packages')
     runs-on: ubuntu-latest
     name: Trigger command
     steps:

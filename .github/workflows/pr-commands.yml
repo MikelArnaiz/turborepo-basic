@@ -139,7 +139,7 @@ jobs:
         if: github.event.comment.body == '/publish'
         id: yarn_command
         run: |
-          command="${{ steps.alphaversion.outputs.filter_published_log }}"
+          command="${{ steps.filter_published_log.outputs.filtered_log }}"
           YARN_ADD=$(echo "$command" | sed 's/^/yarn add /')
           echo "yarn_add<<EOF" >> "$GITHUB_OUTPUT"
           echo "$YARN_ADD" >> "$GITHUB_OUTPUT"
@@ -149,7 +149,7 @@ jobs:
         if: github.event.comment.body == '/publish'
         id: pnpm_command
         run: |
-          command="${{ steps.alphaversion.outputs.filter_published_log }}"
+          command="${{ steps.filter_published_log.outputs.filtered_log }}"
           PNPM_ADD=$(echo "$command" | sed 's/^/pnpm add /')
           echo "pnpm_add<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PNPM_ADD" >> "$GITHUB_OUTPUT"

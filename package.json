@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build-packages": "turbo run build --filter='./packages/*'",
     "changeset": "changeset",
     "changeset:enter": "changeset pre enter next",
     "changeset:exit": "changeset pre exit",
@@ -14,7 +15,8 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,scss,css,yml}\"",
     "lint": "turbo run lint",
     "preinstall": "npx only-allow pnpm",
-    "release": "turbo run build --filter=docs^... && changeset publish",
+    "release": "turbo run build && changeset publish",
+    "release-packages": "pnpm run build-packages && changeset publish",
     "release:pre": "pnpm changeset:pre && pnpm release",
     "tsc": "tsc --noEmit"
   },

@@ -139,7 +139,7 @@ jobs:
           issue_number: ${{ github.event.issue.number }}
           token: ${{ secrets.GH_PAT }}
           body: |
-            ### 🚀 New alpha version released.
+            ### 🚀 New alpha version released
             You can install it with yarn:
             ```
             ${{ steps.yarn_command.outputs.yarn_add }}

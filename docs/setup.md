@@ -61,10 +61,10 @@ Turborepo is a task runner, it won't create package versions itself, for that we
       }
       ```
 
-   1. change access in `changeset/config.json`.
+   <!-- 1. change access in `changeset/config.json`.
       This sets how packages are published. If access: `restricted`, packages will be published as private, requiring log in to an npm account with access to install. If access: `public`, the packages will be made available on the public registry.
 
-      https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public
+      https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#access-restricted--public -->
 
 1. Add to `package.json`'s scripts
 

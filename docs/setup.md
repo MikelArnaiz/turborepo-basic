@@ -81,11 +81,6 @@ Turborepo is a task runner, it won't create package versions itself, for that we
    "release:pre": "pnpm changeset:pre && pnpm release",
    ```
 
-1. Create a GitHub PAT, e.g `GH_MY_PAT`.
-
-   https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-
 1. Add `.github/workflows/release.yml`.
-   Note, it references the previously create PAT, variable name should match.
    There are inline comments, pay attention to them.
    File can be found at [.github/workflows/release.yml](.github/workflows/release.yml)

@@ -14,12 +14,12 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-        # based on
-        # https://github.com/changesets/action/issues/295#issuecomment-1549427775
-        # https://github.com/ad-m/github-push-action/issues/44#issuecomment-581706892
-        with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+        # # based on
+        # # https://github.com/changesets/action/issues/295#issuecomment-1549427775
+        # # https://github.com/ad-m/github-push-action/issues/44#issuecomment-581706892
+        # with:
+        #   persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        #   fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -46,7 +46,7 @@ jobs:
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
           publish: pnpm run release-packages
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Token automatically added by Github
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # - name: Send a Slack notification if a publish happens

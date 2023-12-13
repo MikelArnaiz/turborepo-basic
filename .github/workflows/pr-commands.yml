@@ -16,7 +16,7 @@ jobs:
       - name: Send a reaction to say we are working on it
         uses: dkershner6/reaction-action@v1
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }} # Token automatically added by Github
           reaction: 'eyes'
 
       - name: Fetch the last commit in the PR
@@ -92,7 +92,7 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Token automatically added by Github
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Filter published log
@@ -129,7 +129,7 @@ jobs:
       - name: Send a rocket so we know the comment is addressed
         uses: dkershner6/reaction-action@v1
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }} # Token automatically added by Github
           reaction: 'rocket'
 
       - name: Comment published version
@@ -137,7 +137,7 @@ jobs:
         with:
           type: create
           issue_number: ${{ github.event.issue.number }}
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }} # Token automatically added by Github
           body: |
             ### 🚀 New alpha version released
             You can install it with yarn:
@@ -162,5 +162,5 @@ jobs:
         if: ${{ failure() }}
         uses: dkershner6/reaction-action@v1
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }} # Token automatically added by Github
           reaction: '-1'

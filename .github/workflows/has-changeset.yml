@@ -61,7 +61,7 @@ jobs:
 
       - name: Authenticate with GitHub NPM registry
         run: |
-          echo "@catawiki:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+          echo "@__COMPANY_NAME__:registry=https://npm.pkg.github.com/" >> ~/.npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT }}" >> ~/.npmrc
 
       - name: Restore cached node_modules

@@ -2,10 +2,6 @@
 
 This POC and repository started in a private repo, at [github.com/MikelArnaiz/turborepo-basic](https://github.com/MikelArnaiz/turborepo-basic/).
 
-The repository `github.com/catawiki/cw-poc-monorepo-turbo` is at the moment not configured to produce valid releases within `Catawiki` org. GitHub actions will therefore fail.
-
-Similarly, packages names don't contain yet the scope `@catawiki/`.
-
 # Turborepo monorepo
 
 Welcome to this monorepo Proof of Concept (POC), powered by [Turborepo](https://turbo.build/repo).

@@ -9,7 +9,7 @@
 
 ## Nice to have
 
-- [ ] import or create this repo in Catawiki org, e.g `turborepo-poc`
+- [ ] import or create this repo in org, e.g `turborepo-poc`
   - [ ] get npm token
 - [ ] create meaningful examples
 - [ ] Understand how does "[Linked Packages](https://github.com/changesets/changesets/blob/main/docs/linked-packages.md)" and "[Fixed Packages](https://github.com/changesets/changesets/blob/main/docs/fixed-packages.md#fixed-packages)" work.
